@@ -21,9 +21,10 @@
       --accent-gold: #D4AF37;
       --border-light: #D6E6F5;
       --border-card: #E0EDFA;
+      --bubble-color: rgba(74, 127, 193, 0.07);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth;  overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     img { max-width: 100%; height: auto; display: block; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -33,11 +34,60 @@
       line-height: 1.6;
       background: linear-gradient(180deg, #F5FAFF 0%, #EDF7FE 25%, #E3F0FB 50%, #D9EAF8 75%, #D0E4F5 100%);
       min-height: 100vh;
+      position: relative;
     }
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     .gold { color: #D4AF37; }
+
+    /* ===== BUBBLE MOTION (background) ===== */
+    .bubble-container {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      border-radius: 50%;
+      background: var(--bubble-color);
+      box-shadow: inset 0 0 30px rgba(74, 127, 193, 0.03);
+      will-change: transform, opacity;
+      animation: rise linear infinite;
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0.2; }
+      50% { opacity: 0.5; }
+      100% { transform: translateY(-120vh) scale(1.3) rotate(720deg); opacity: 0; }
+    }
+
+    /* ===== STAR ANIMATION (floating stars) ===== */
+    .star-container {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      color: rgba(212, 175, 55, 0.12);
+      font-size: 12px;
+      animation: floatStar linear infinite;
+      will-change: transform, opacity;
+    }
+    @keyframes floatStar {
+      0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0.1; }
+      50% { opacity: 0.4; }
+      100% { transform: translateY(-120vh) scale(1.2) rotate(360deg); opacity: 0; }
+    }
 
     /* ===== NAVBAR ===== */
     .navbar {
@@ -114,7 +164,7 @@
     @media (max-width: 480px) { .stats-row { grid-template-columns: 1fr 1fr; gap: 12px; } .stat-card { padding: 20px 12px; } .stat-card .stat-num { font-size: 1.8rem; } }
 
     /* ===== SECTIONS ===== */
-    .section { padding: 80px 0; position: relative; }
+    .section { padding: 80px 0; position: relative; z-index: 2; }
     .section-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent-blue); margin-bottom: 8px; display: inline-flex; align-items: center; gap: 8px; }
     .section-tag::before { content: ''; width: 24px; height: 2px; background: linear-gradient(90deg, var(--accent-blue), var(--accent-light)); border-radius: 2px; }
     .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.5px; color: var(--text-primary); }
@@ -129,6 +179,51 @@
     .btn-outline:hover { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(59,130,246,0.05); transform: translateY(-3px); }
 
     @media (max-width: 480px) { .btn-primary, .btn-outline { padding: 11px 22px; font-size: 0.88rem; } .hero-btns { flex-direction: column; align-items: flex-start; } }
+
+    /* ===== PREMIUM MARQUEE (new) ===== */
+    .marquee-section {
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--border-card);
+      border-bottom: 1px solid var(--border-card);
+      padding: 16px 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+    .premium-marquee {
+      display: flex;
+      white-space: nowrap;
+      animation: marqueeScroll 30s linear infinite;
+      width: max-content;
+    }
+    .premium-marquee-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+    .premium-marquee-content .diamond-separator {
+      color: var(--accent-gold);
+      font-size: 0.6rem;
+      opacity: 0.7;
+      margin: 0 4px;
+    }
+    .premium-marquee-content span {
+      flex-shrink: 0;
+    }
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @media (max-width: 768px) {
+      .premium-marquee-content { font-size: 0.7rem; gap: 8px; }
+      .premium-marquee { animation-duration: 25s; }
+    }
 
     /* ===== ABOUT ===== */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 40px; }
@@ -322,6 +417,12 @@
 </head>
 <body>
 
+<!-- BUBBLE CONTAINER -->
+<div class="bubble-container" id="bubbleContainer"></div>
+
+<!-- STAR CONTAINER -->
+<div class="star-container" id="starContainer"></div>
+
 <!-- Navbar -->
 <nav class="navbar" id="navbar">
   <div class="nav-inner">
@@ -421,6 +522,34 @@
   </div>
 </section>
 
+<!-- PREMIUM MARQUEE (new) -->
+<div class="marquee-section">
+  <div class="premium-marquee">
+    <div class="premium-marquee-content">
+      <span>Photo & Video Shoots</span><span class="diamond-separator">♦</span>
+      <span>Video Editing</span><span class="diamond-separator">♦</span>
+      <span>Graphic Design</span><span class="diamond-separator">♦</span>
+      <span>Brand Identity</span><span class="diamond-separator">♦</span>
+      <span>Social Media Growth</span><span class="diamond-separator">♦</span>
+      <span>Website Development</span><span class="diamond-separator">♦</span>
+      <span>Content Strategy</span><span class="diamond-separator">♦</span>
+      <span>Personal Branding</span><span class="diamond-separator">♦</span>
+      <span>Growth Consulting</span><span class="diamond-separator">♦</span>
+    </div>
+    <div class="premium-marquee-content">
+      <span>Photo & Video Shoots</span><span class="diamond-separator">♦</span>
+      <span>Video Editing</span><span class="diamond-separator">♦</span>
+      <span>Graphic Design</span><span class="diamond-separator">♦</span>
+      <span>Brand Identity</span><span class="diamond-separator">♦</span>
+      <span>Social Media Growth</span><span class="diamond-separator">♦</span>
+      <span>Website Development</span><span class="diamond-separator">♦</span>
+      <span>Content Strategy</span><span class="diamond-separator">♦</span>
+      <span>Personal Branding</span><span class="diamond-separator">♦</span>
+      <span>Growth Consulting</span><span class="diamond-separator">♦</span>
+    </div>
+  </div>
+</div>
+
 <!-- About -->
 <section id="about" class="section">
   <div class="container">
@@ -490,7 +619,7 @@
       <div class="package-card stagger-item">
         <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent-blue),var(--accent-light));"></div>
         <div class="price-label">Starting From</div>
-        <div class="price"><span class="counter-animate"><span class="num" data-target="499">0</span></span></div>
+        <div class="price">$<span class="counter-animate"><span class="num" data-target="5">0</span></span></div>
         <div class="per-label">Per Video</div>
         <h3>Professional Video Editing</h3>
         <div class="divider"></div>
@@ -508,7 +637,7 @@
         <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent-blue),var(--accent-light));"></div>
         <div class="popular-badge">Most Popular</div>
         <div class="price-label">Starting At</div>
-        <div class="price"><span class="counter-animate"><span class="num" data-target="2999">0</span></span></div>
+        <div class="price">$<span class="counter-animate"><span class="num" data-target="29">0</span></span></div>
         <div class="per-label">Per Shoot</div>
         <h3>Professional Video Shoot</h3>
         <div class="divider"></div>
@@ -525,7 +654,7 @@
       <div class="package-card stagger-item">
         <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent-blue),var(--accent-light));"></div>
         <div class="price-label">Starting At</div>
-        <div class="price"><span class="counter-animate"><span class="num" data-target="7999">0</span></span></div>
+        <div class="price">$<span class="counter-animate"><span class="num" data-target="80">0</span></span></div>
         <div class="per-label">Per Website</div>
         <h3>Website Design</h3>
         <div class="divider"></div>
@@ -758,7 +887,6 @@
       <a href="#about"><i class="fas fa-chevron-right" style="width:12px;font-size:10px;"></i> About</a>
       <a href="#services"><i class="fas fa-chevron-right" style="width:12px;font-size:10px;"></i> Services</a>
       <a href="#packages"><i class="fas fa-chevron-right" style="width:12px;font-size:10px;"></i> Packages</a>
-      <a href="#portfolio"><i class="fas fa-chevron-right" style="width:12px;font-size:10px;"></i> Portfolio</a>
       <a href="#serve"><i class="fas fa-chevron-right" style="width:12px;font-size:10px;"></i> Who We Serve</a>
       <a href="#process"><i class="fas fa-chevron-right" style="width:12px;font-size:10px;"></i> Process</a>
       <a href="#contact"><i class="fas fa-chevron-right" style="width:12px;font-size:10px;"></i> Contact</a>
@@ -779,6 +907,42 @@
 <a href="https://wa.me/918398095525" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
 
 <script>
+  /* ===== BUBBLE MOTION ===== */
+  (function createBubbles() {
+    const container = document.getElementById('bubbleContainer');
+    const colors = ['rgba(74, 127, 193, 0.05)', 'rgba(74, 127, 193, 0.07)', 'rgba(74, 127, 193, 0.04)', 'rgba(106, 163, 224, 0.05)'];
+    for (let i = 0; i < 20; i++) {
+      const bubble = document.createElement('div');
+      bubble.classList.add('bubble');
+      const size = 20 + Math.random() * 70;
+      bubble.style.width = size + 'px';
+      bubble.style.height = size + 'px';
+      bubble.style.left = Math.random() * 100 + '%';
+      bubble.style.animationDuration = 14 + Math.random() * 20 + 's';
+      bubble.style.animationDelay = Math.random() * 18 + 's';
+      bubble.style.background = colors[Math.floor(Math.random() * colors.length)];
+      container.appendChild(bubble);
+    }
+  })();
+
+  /* ===== STAR ANIMATION ===== */
+  (function createStars() {
+    const container = document.getElementById('starContainer');
+    const starSymbols = ['✦', '✧', '★', '☆'];
+    for (let i = 0; i < 15; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.textContent = starSymbols[Math.floor(Math.random() * starSymbols.length)];
+      const size = 10 + Math.random() * 18;
+      star.style.fontSize = size + 'px';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.animationDuration = 18 + Math.random() * 25 + 's';
+      star.style.animationDelay = Math.random() * 20 + 's';
+      star.style.opacity = 0.1 + Math.random() * 0.3;
+      container.appendChild(star);
+    }
+  })();
+
   /* ===== NAVBAR ===== */
   const mobileToggle = document.getElementById('mobileToggle');
   const mobileMenu = document.getElementById('mobileMenu');
@@ -829,15 +993,6 @@
     document.getElementById('form-success').style.display = 'flex';
   });
 
-  /* ===== VIDEO PLAY ON HOVER ===== */
-  document.querySelectorAll('.portfolio-item').forEach(item => {
-    const video = item.querySelector('video');
-    let t;
-    item.addEventListener('mouseenter', () => { clearTimeout(t); video.play().catch(() => {}); });
-    item.addEventListener('mouseleave', () => { t = setTimeout(() => { video.pause(); video.currentTime = 0; }, 300); });
-    item.addEventListener('click', () => { video.paused ? video.play().catch(() => {}) : video.pause(); });
-  });
-
   /* ===== SCROLL ANIMATIONS ===== */
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -878,7 +1033,6 @@
     update();
   }
 
-  // Observe counter elements and animate when visible
   const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -895,7 +1049,6 @@
     counterObserver.observe(el);
   });
 
-  // Also trigger counters that are already visible on load
   setTimeout(() => {
     document.querySelectorAll('.counter-animate .num:not([data-animated])').forEach(num => {
       const rect = num.closest('.counter-animate').getBoundingClientRect();
