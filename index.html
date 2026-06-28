@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
+    /* ===== ROOT VARIABLES ===== */
     :root {
       --bg-primary: #E8F4FD;
       --bg-secondary: #EDF7FE;
@@ -100,8 +101,10 @@
 
     /* ===== STATS ===== */
     .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
-    .stat-card { background: var(--bg-card); border: 1.5px solid var(--border-card); border-radius: 16px; padding: 28px 20px; text-align: center; transition: all 0.3s ease; box-shadow: 0 2px 12px rgba(74,127,193,0.06); }
+    .stat-card { background: var(--bg-card); border: 1.5px solid var(--border-card); border-radius: 16px; padding: 28px 20px; text-align: center; transition: all 0.3s ease; box-shadow: 0 2px 12px rgba(74,127,193,0.06); position: relative; overflow: hidden; }
+    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent-blue), var(--accent-light)); transform: scaleX(0); transition: transform 0.4s ease; }
     .stat-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(74,127,193,0.1); border-color: rgba(74,127,193,0.2); }
+    .stat-card:hover::before { transform: scaleX(1); }
     .stat-card .stat-icon { font-size: 1.8rem; color: var(--accent-blue); margin-bottom: 8px; opacity: 0.7; }
     .stat-card .stat-num { font-size: 2.2rem; font-weight: 900; color: var(--accent-blue); line-height: 1.2; }
     .stat-card .stat-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
@@ -174,29 +177,6 @@
 
     @media (max-width: 992px) { .packages-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
     @media (max-width: 600px) { .packages-grid { grid-template-columns: 1fr; gap: 16px; } .package-card { padding: 24px 20px; } }
-
-    /* ===== PORTFOLIO ===== */
-    #portfolio { background: var(--bg-secondary); }
-    .portfolio-section-outer { width: 100vw; position: relative; transform: translateX(-50%); margin-top: 48px; overflow: hidden; }
-    .portfolio-track-wrapper { position: relative; padding: 10px 0; -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%); }
-    .portfolio-track-wrapper + .portfolio-track-wrapper { margin-top: 18px; }
-    .portfolio-track { display: flex; gap: 16px; width: max-content; animation: scrollRight 40s linear infinite; }
-    .portfolio-track.reverse { animation: scrollLeft 40s linear infinite; }
-    .portfolio-track:hover, .portfolio-track.reverse:hover { animation-play-state: paused; }
-
-    @keyframes scrollRight { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    @keyframes scrollLeft { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
-
-    .portfolio-item { flex: 0 0 180px; width: 180px; height: 320px; border-radius: 16px; overflow: hidden; background: #0b0d10; box-shadow: 0 4px 18px rgba(0,0,0,0.18); transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; cursor: pointer; }
-    .portfolio-item:hover { transform: scale(1.06); box-shadow: 0 12px 36px rgba(0,0,0,0.28); z-index: 2; }
-    .portfolio-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .portfolio-item .video-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 12px 16px; background: linear-gradient(transparent, rgba(0,0,0,0.72)); color: #fff; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0; transition: opacity 0.3s ease; }
-    .portfolio-item:hover .video-overlay { opacity: 1; }
-    .portfolio-item .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 46px; height: 46px; background: rgba(255,255,255,0.18); backdrop-filter: blur(8px); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1rem; border: 1.5px solid rgba(255,255,255,0.35); opacity: 0; transition: all 0.3s ease; pointer-events: none; }
-    .portfolio-item:hover .play-icon { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
-
-    @media (max-width: 768px) { .portfolio-item { flex: 0 0 130px; width: 130px; height: 230px; } }
-    @media (max-width: 480px) { .portfolio-item { flex: 0 0 105px; width: 105px; height: 186px; } }
 
     /* ===== WHO WE SERVE ===== */
     .serve-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 18px; margin-top: 48px; }
@@ -307,6 +287,37 @@
     .social-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(145deg,#E8F2FC,#DDEAF8); display: flex; align-items: center; justify-content: center; color: var(--accent-blue); border: 1.5px solid rgba(74,127,193,0.1); transition: all 0.3s ease; }
     .social-icon:hover { background: var(--accent-blue); color: #fff; transform: translateY(-2px); }
     .social-icon i { font-size: 18px; }
+
+    /* ===== ANIMATED COUNTER ===== */
+    .counter-animate {
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    .counter-animate .num {
+      display: inline-block;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+    .stat-card .stat-num .num {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--accent-blue);
+    }
+    .about-card .big-num .num {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--accent-blue);
+    }
+    .package-card .price .num {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--accent-blue);
+    }
+    .stat-num .num {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--accent-blue);
+    }
   </style>
 </head>
 <body>
@@ -323,7 +334,7 @@
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#packages">Packages</a>
-      <a href="#portfolio">Portfolio</a>
+      <a href="portfolio.html">Portfolio</a>
       <a href="#serve">Who We Serve</a>
       <a href="#process">Process</a>
       <a href="#contact">Contact</a>
@@ -384,25 +395,25 @@
     <div class="stats-row stagger" style="margin-top:48px;">
       <div class="stat-card stagger-item">
         <div class="stat-icon"><i class="fas fa-film"></i></div>
-        <div class="stat-num">600+</div>
+        <div class="stat-num"><span class="counter-animate"><span class="num" data-target="600">0</span></span></div>
         <div class="stat-label">Videos Edited</div>
         <div class="stat-sub">Reels, Shorts &amp; Commercials</div>
       </div>
       <div class="stat-card stagger-item">
         <div class="stat-icon"><i class="fas fa-code"></i></div>
-        <div class="stat-num">60+</div>
+        <div class="stat-num"><span class="counter-animate"><span class="num" data-target="60">0</span></span></div>
         <div class="stat-label">Websites Built</div>
         <div class="stat-sub">E-commerce &amp; Portfolio</div>
       </div>
       <div class="stat-card stagger-item">
         <div class="stat-icon"><i class="fas fa-camera-retro"></i></div>
-        <div class="stat-num">100+</div>
+        <div class="stat-num"><span class="counter-animate"><span class="num" data-target="100">0</span></span></div>
         <div class="stat-label">Shoots Completed</div>
         <div class="stat-sub">Studio &amp; On-Location</div>
       </div>
       <div class="stat-card stagger-item">
         <div class="stat-icon"><i class="fas fa-users"></i></div>
-        <div class="stat-num">25+</div>
+        <div class="stat-num"><span class="counter-animate"><span class="num" data-target="25">0</span></span></div>
         <div class="stat-label">Accounts Managed</div>
         <div class="stat-sub">Instagram, YouTube &amp; Facebook</div>
       </div>
@@ -427,7 +438,7 @@
       </div>
       <div class="slide-right">
         <div class="about-card">
-          <div class="big-num">9+</div>
+          <div class="big-num"><span class="counter-animate"><span class="num" data-target="9">0</span></span></div>
           <div class="big-label">Creative Disciplines Under One Roof</div>
           <p class="card-desc">Photo &amp; video, editing, design, branding, websites, social media, content strategy, personal branding, and growth consulting — all from one team that knows your brand inside out.</p>
           <div class="pill-group">
@@ -479,7 +490,7 @@
       <div class="package-card stagger-item">
         <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent-blue),var(--accent-light));"></div>
         <div class="price-label">Starting From</div>
-        <div class="price">₹499</div>
+        <div class="price"><span class="counter-animate"><span class="num" data-target="499">0</span></span></div>
         <div class="per-label">Per Video</div>
         <h3>Professional Video Editing</h3>
         <div class="divider"></div>
@@ -497,7 +508,7 @@
         <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent-blue),var(--accent-light));"></div>
         <div class="popular-badge">Most Popular</div>
         <div class="price-label">Starting At</div>
-        <div class="price">₹2,999</div>
+        <div class="price"><span class="counter-animate"><span class="num" data-target="2999">0</span></span></div>
         <div class="per-label">Per Shoot</div>
         <h3>Professional Video Shoot</h3>
         <div class="divider"></div>
@@ -514,7 +525,7 @@
       <div class="package-card stagger-item">
         <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent-blue),var(--accent-light));"></div>
         <div class="price-label">Starting At</div>
-        <div class="price">₹7,999</div>
+        <div class="price"><span class="counter-animate"><span class="num" data-target="7999">0</span></span></div>
         <div class="per-label">Per Website</div>
         <h3>Website Design</h3>
         <div class="divider"></div>
@@ -535,63 +546,6 @@
         <i class="fas fa-info-circle" style="margin-right:6px;"></i>
         * Sample packages for illustration — final pricing and inclusions to be confirmed directly with Dwarkadhish Studio.
       </p>
-    </div>
-  </div>
-</section>
-
-<!-- Portfolio -->
-<section id="portfolio" class="section">
-  <div class="container">
-    <div style="text-align:center;" class="slide-up">
-      <span class="section-tag" style="justify-content:center;"><i class="fas fa-play-circle" style="margin-right:6px;"></i> Our Portfolio</span>
-      <h2 class="section-title" style="max-width:700px;margin:0 auto;">Short Form Content</h2>
-      <p class="section-desc" style="margin:12px auto 0;">Hover to pause · click to play · scroll through our latest Reels, Shorts &amp; TikToks.</p>
-    </div>
-  </div>
-
-  <div class="portfolio-section-outer slide-up">
-    <!-- Row 1 — scrolls right -->
-    <div class="portfolio-track-wrapper">
-      <div class="portfolio-track" id="track1">
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #1</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #2</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #3</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #4</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #5</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #6</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #7</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #8</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #1</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #2</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #3</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #4</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #5</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #6</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #7</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Short Form #8</div></div>
-      </div>
-    </div>
-
-    <!-- Row 2 — scrolls left -->
-    <div class="portfolio-track-wrapper">
-      <div class="portfolio-track reverse" id="track2">
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #1</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #2</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #3</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #4</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #5</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #6</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #7</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #8</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #1</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #2</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #3</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #4</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #5</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #6</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #7</div></div>
-        <div class="portfolio-item"><video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video><div class="play-icon"><i class="fas fa-play"></i></div><div class="video-overlay">Brand Shoot #8</div></div>
-      </div>
     </div>
   </div>
 </section>
@@ -901,6 +855,56 @@
       el.classList.add('visible');
     });
   }, 100);
+
+  /* ===== ANIMATED COUNTERS ===== */
+  function animateCounter(element) {
+    const target = parseInt(element.dataset.target);
+    if (isNaN(target)) return;
+    let current = 0;
+    const duration = 2000;
+    const stepTime = 16;
+    const steps = duration / stepTime;
+    const increment = target / steps;
+    
+    function update() {
+      current += increment;
+      if (current < target) {
+        element.textContent = Math.floor(current);
+        requestAnimationFrame(update);
+      } else {
+        element.textContent = target;
+      }
+    }
+    update();
+  }
+
+  // Observe counter elements and animate when visible
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const num = entry.target.querySelector('.num');
+        if (num && !num.dataset.animated) {
+          num.dataset.animated = 'true';
+          animateCounter(num);
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.counter-animate').forEach(el => {
+    counterObserver.observe(el);
+  });
+
+  // Also trigger counters that are already visible on load
+  setTimeout(() => {
+    document.querySelectorAll('.counter-animate .num:not([data-animated])').forEach(num => {
+      const rect = num.closest('.counter-animate').getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        num.dataset.animated = 'true';
+        animateCounter(num);
+      }
+    });
+  }, 500);
 </script>
 
 </body>
