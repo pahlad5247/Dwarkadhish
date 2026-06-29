@@ -237,22 +237,80 @@
     .portfolio-section-outer { width: 100vw; position: relative; transform: translateX(-50%); margin-top: 48px; overflow: hidden; }
     .portfolio-track-wrapper { position: relative; padding: 10px 0; -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%); }
     .portfolio-track-wrapper + .portfolio-track-wrapper { margin-top: 18px; }
-    .portfolio-track { display: flex; gap: 16px; width: max-content; animation: scrollRight 40s linear infinite; }
+    .portfolio-track { display: flex; gap: 20px; width: max-content; animation: scrollRight 40s linear infinite; }
     .portfolio-track.reverse { animation: scrollLeft 40s linear infinite; }
     .portfolio-track:hover, .portfolio-track.reverse:hover { animation-play-state: paused; }
 
     @keyframes scrollRight { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     @keyframes scrollLeft { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
-    /* ===== PORTFOLIO ITEMS ===== */
-    .portfolio-item { flex: 0 0 180px; width: 180px; height: 320px; border-radius: 16px; overflow: hidden; background: #0b0d10; box-shadow: 0 4px 18px rgba(0,0,0,0.18); transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; cursor: pointer; }
-    .portfolio-item:hover { transform: scale(1.06); box-shadow: 0 12px 36px rgba(0,0,0,0.28); z-index: 2; }
+    /* ===== PORTFOLIO ITEMS - INCREASED SIZE ===== */
+    .portfolio-item { 
+      flex: 0 0 280px; 
+      width: 280px; 
+      height: 420px; 
+      border-radius: 20px; 
+      overflow: hidden; 
+      background: #0b0d10; 
+      box-shadow: 0 6px 24px rgba(0,0,0,0.2); 
+      transition: transform 0.3s ease, box-shadow 0.3s ease; 
+      position: relative; 
+      cursor: pointer; 
+    }
+    .portfolio-item:hover { transform: scale(1.05); box-shadow: 0 16px 48px rgba(0,0,0,0.3); z-index: 2; }
     .portfolio-item video, .portfolio-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .portfolio-item .video-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 12px 16px; background: linear-gradient(transparent, rgba(0,0,0,0.72)); color: #fff; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0; transition: opacity 0.3s ease; }
+    .portfolio-item .video-overlay { 
+      position: absolute; 
+      bottom: 0; 
+      left: 0; 
+      right: 0; 
+      padding: 18px 16px 20px; 
+      background: linear-gradient(transparent, rgba(0,0,0,0.75)); 
+      color: #fff; 
+      font-size: 0.8rem; 
+      font-weight: 600; 
+      letter-spacing: 0.05em; 
+      text-transform: uppercase; 
+      opacity: 0; 
+      transition: opacity 0.3s ease; 
+    }
     .portfolio-item:hover .video-overlay { opacity: 1; }
-    .portfolio-item .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 46px; height: 46px; background: rgba(255,255,255,0.18); backdrop-filter: blur(8px); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1rem; border: 1.5px solid rgba(255,255,255,0.35); opacity: 0; transition: all 0.3s ease; pointer-events: none; }
+    .portfolio-item .play-icon { 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+      width: 60px; 
+      height: 60px; 
+      background: rgba(255,255,255,0.2); 
+      backdrop-filter: blur(10px); 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      color: #fff; 
+      font-size: 1.4rem; 
+      border: 2px solid rgba(255,255,255,0.4); 
+      opacity: 0; 
+      transition: all 0.3s ease; 
+      pointer-events: none; 
+    }
     .portfolio-item:hover .play-icon { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
-    .portfolio-item .photo-badge { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); padding: 4px 12px; border-radius: 999px; font-size: 0.6rem; font-weight: 600; color: #fff; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.15); }
+    .portfolio-item .photo-badge { 
+      position: absolute; 
+      top: 16px; 
+      right: 16px; 
+      background: rgba(0,0,0,0.65); 
+      backdrop-filter: blur(6px); 
+      padding: 6px 16px; 
+      border-radius: 999px; 
+      font-size: 0.7rem; 
+      font-weight: 600; 
+      color: #fff; 
+      letter-spacing: 0.05em; 
+      text-transform: uppercase; 
+      border: 1px solid rgba(255,255,255,0.15); 
+    }
     /* Thumbnail overlay for videos */
     .portfolio-item .thumbnail-overlay {
         position: absolute;
@@ -265,21 +323,21 @@
         transition: opacity 0.3s;
     }
     .portfolio-item .thumbnail-overlay i {
-        font-size: 2.2rem;
+        font-size: 3rem;
         color: rgba(255,255,255,0.7);
-        text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+        text-shadow: 0 2px 16px rgba(0,0,0,0.5);
     }
     .portfolio-item:hover .thumbnail-overlay { opacity: 0; }
     /* Sound badge */
     .portfolio-item .sound-badge {
         position: absolute;
-        bottom: 12px;
-        right: 12px;
-        background: rgba(0,0,0,0.6);
+        bottom: 16px;
+        right: 16px;
+        background: rgba(0,0,0,0.65);
         backdrop-filter: blur(4px);
-        padding: 4px 10px;
+        padding: 6px 14px;
         border-radius: 999px;
-        font-size: 0.55rem;
+        font-size: 0.65rem;
         font-weight: 600;
         color: #fff;
         letter-spacing: 0.05em;
@@ -290,8 +348,21 @@
     }
     .portfolio-item:hover .sound-badge { opacity: 1; }
 
-    @media (max-width: 768px) { .portfolio-item { flex: 0 0 130px; width: 130px; height: 230px; } }
-    @media (max-width: 480px) { .portfolio-item { flex: 0 0 105px; width: 105px; height: 186px; } }
+    /* Responsive adjustments */
+    @media (max-width: 1024px) { 
+      .portfolio-item { flex: 0 0 220px; width: 220px; height: 340px; } 
+    }
+    @media (max-width: 768px) { 
+      .portfolio-item { flex: 0 0 170px; width: 170px; height: 260px; } 
+    }
+    @media (max-width: 480px) { 
+      .portfolio-item { flex: 0 0 130px; width: 130px; height: 200px; border-radius: 14px; } 
+      .portfolio-item .play-icon { width: 44px; height: 44px; font-size: 1rem; }
+      .portfolio-item .thumbnail-overlay i { font-size: 2rem; }
+      .portfolio-item .video-overlay { font-size: 0.6rem; padding: 12px 10px 14px; }
+      .portfolio-item .sound-badge { font-size: 0.5rem; padding: 4px 10px; bottom: 10px; right: 10px; }
+      .portfolio-item .photo-badge { font-size: 0.55rem; padding: 4px 12px; top: 10px; right: 10px; }
+    }
 
     /* ===== LIGHTBOX ===== */
     .lightbox { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.92); backdrop-filter: blur(24px); display: none; align-items: center; justify-content: center; padding: 40px; animation: fadeIn 0.3s ease; }
